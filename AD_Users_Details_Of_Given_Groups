@@ -1,0 +1,7 @@
+$groups = Import-csv C:\Users\ad_ucc_ao\Desktop\groups_list.csv
+$results = foreach ($group in $groups) {
+    Get-ADGroupMember $group -Recursive |
+Get-ADUser -Properties Title,Department | select Name,Title,Office,Department, SamAccountName, @{n='GroupName';e={$group}}
+    }
+
+$results | Export-csv -path C:\Users\ad_ucc_ao\Desktop\users_data.csv -Notypeinformation
