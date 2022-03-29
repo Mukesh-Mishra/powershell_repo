@@ -1,0 +1,11 @@
+$users=Import-csv C:\Users\ad_ucc_ao\Desktop\users_list.csv
+foreach($user in $users){
+Try{
+$ErrorActionPreference='Stop'
+get-aduser $user.samaccountname |select Name,samaccountname, @{n ="AccountStatus";E={if(($_.Enabled -eq 'TRUE')) {'Enabled'} Else {'Disabled'}}}|
+Export-csv C:\Users\ad_ucc_ao\Desktop\data.csv -notype -append
+}
+catch{
+"Not Found $($user.samaccountname)"
+}
+}
