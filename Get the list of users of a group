@@ -1,0 +1,6 @@
+Get the list of users of a group
+-----------------------------------------
+
+Get-ADGroupMember -Identity "Group1" -Recursive | %{Get-ADUser -Identity $_.distinguishedName -Properties Enabled} | 
+Select Name, SamAccountName, Enabled | 
+Export-csv -path C:\Users\ad_ucc_ao\Desktop\data.csv -NoTypeInformation
