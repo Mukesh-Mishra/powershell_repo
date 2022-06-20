@@ -1,0 +1,14 @@
+$users = Import-csv C:\Users\ad_ucc_ao\Desktop\users_list.csv
+$groups = Import-csv C:\Users\ad_ucc_ao\Desktop\groups_list.csv
+
+foreach ($user in $users) {
+    foreach ($group in $groups) {
+        $members = Get-ADGroupMember -Identity $group -Recursive | Select -ExpandProperty SamAccountName
+
+        If ($members -contains $user) {
+            Write-Host "$user is a member of $group"
+        } Else {
+            Write-Host "$user is not a member of $group"
+        }
+    }
+}
